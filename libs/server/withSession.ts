@@ -10,7 +10,7 @@ declare module "iron-session" {
 
 const cookieOptions = {
   cookieName: "carrotsession",
-  password: "NomadCarrotMarketChallenge123456789!!!!!",
+  password: "NomadCoderLastChallengeMiniTwitter12345!!!!!",
 };
 
 export function withApiSession(fn: any) {

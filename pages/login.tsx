@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { NextPage } from "next";
 import useMutation from "../libs/client/useMutation";
+import { useRouter } from "next/router";
 
 interface IForm {
-  name: string;
   email: string;
 }
 
@@ -13,11 +13,13 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
+
   const [login, { loading, data }] =
     useMutation<MutationResult>("/api/users/login");
 
@@ -25,6 +27,12 @@ const Login: NextPage = () => {
     if (loading) return;
     login(validForm);
   };
+
+  useEffect(() => {
+    if (data && data.ok) {
+      router.push("/");
+    }
+  }, [data]);
 
   return (
     <main className="w-full">

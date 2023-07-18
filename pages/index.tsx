@@ -1,22 +1,25 @@
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import useSWR from "swr";
+// import { useRouter } from "next/router";
+import React from "react";
+import { NextPage } from "next";
+import useUser from "../libs/client/useUser";
 
-export default () => {
-  const router = useRouter();
-  const { data, error } = useSWR("/api/users/me");
-  useEffect(() => {
-    if (error) {
-      router.replace("/create-account");
-    }
-  }, [router, error]);
-  if (!data) {
-    return <div />;
-  }
-  return (
-    <div>
-      <h1>Welcome {data?.name}!</h1>
-      <h3>Your email is: {data?.email}</h3>
-    </div>
+const Home: NextPage = () => {
+  const { user, isLoading } = useUser();
+  console.log(user, "user");
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
+    <>
+      {user ? (
+        <>
+          <h1>Welcome {user.name}!!</h1>
+          <h2>Your email is: {user.email}</h2>
+        </>
+      ) : (
+        <h1>You are not logged in</h1>
+      )}
+    </>
   );
 };
+
+export default Home;

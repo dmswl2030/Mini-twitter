@@ -1,44 +1,43 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { useForm } from "react-hook-form";
+import useMutation from "../libs/client/useMutation";
 
 interface IForm {
   name: string;
   email: string;
 }
 
+interface MutationResult {
+  ok: boolean;
+  email?: string;
+}
+
 const CreateAccount: NextPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const onValid = async (data: IForm) => {
-    if (!loading) {
-      setLoading(true);
-      const request = await fetch("/api/users/create-account", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (request.status === 200) {
-        alert("Account already exists! Please log in!");
-      }
-      if (request.status === 201) {
-        alert("Account created! Please log in!");
-      }
-      if (request.status !== 405) {
-        router.push("/login");
-      }
 
-      setLoading(false);
-    }
+  const [res, { loading, data }] = useMutation<MutationResult>(
+    "/api/users/create-account"
+  );
+
+  const onValid = (validForm: IForm) => {
+    if (loading) return;
+    res(validForm);
   };
+
+  useEffect(() => {
+    if (data?.ok) {
+      console.log("회원가입 완료");
+      router.push("/login");
+    }
+  }, [data]);
+
   return (
     <main className="w-full">
       <div className="max-w-lg m-auto">
