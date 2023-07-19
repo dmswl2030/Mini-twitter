@@ -33,7 +33,6 @@ const CreateAccount: NextPage = () => {
 
   useEffect(() => {
     if (data?.ok) {
-      console.log("회원가입 완료");
       router.push("/login");
     }
   }, [data]);
@@ -55,7 +54,7 @@ const CreateAccount: NextPage = () => {
             </div>
 
             <div className="w-full space-y-5">
-              <h1 className="font-bold text-2xl">지금 트위터에 가입하세요</h1>
+              <h1 className="font-bold text-2xl">트위터에 가입하세요</h1>
               <form
                 onSubmit={handleSubmit(onValid)}
                 className="flex flex-col items-center space-y-3"
@@ -93,7 +92,7 @@ const CreateAccount: NextPage = () => {
               <p>
                 이미 계정이 있으신가요?{" "}
                 <a className="text-blue-500" href="/login">
-                  로그인하기
+                  로그인
                 </a>
               </p>
             </div>
