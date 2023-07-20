@@ -1,33 +1,41 @@
-import type { NextPage } from "next";
-import { useForm } from "react-hook-form";
 import useMutation from "../libs/client/useMutation";
+import { useForm } from "react-hook-form";
+import useSWR from "swr";
 import { useEffect } from "react";
-import { Tweet } from "@prisma/client";
-import { useRouter } from "next/router";
+import { NextPage } from "next";
+// import { Tweet } from "@prisma/client";
 
-interface UploadProductForm {
+interface UploadForm {
   text: string;
 }
-
-interface UploadProductMutation {
+interface UploadMutation {
   ok: boolean;
-  tweet: Tweet;
 }
 
 const Upload: NextPage = () => {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm<UploadProductForm>();
-  const [uploadProduct, { loading, data }] =
-    useMutation<UploadProductMutation>("/api/tweets");
-  const onValid = (data: UploadProductForm) => {
+  const { mutate } = useSWR<UploadMutation>("/api/tweet");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<UploadForm>();
+
+  const [tweet, { data, loading }] = useMutation<UploadMutation>("/api/tweet");
+
+  const onValid = async ({ text }: UploadForm) => {
     if (loading) return;
-    uploadProduct(data);
+    tweet({
+      text,
+    });
   };
   useEffect(() => {
+    if (loading) return;
     if (data?.ok) {
-      router.replace(`/tweets/${data.tweet.id}`);
+      setValue("text", "");
+      mutate();
     }
-  }, [data, router]);
+  }, [data]);
   return (
     <div className="w-full">
       <form className="flex h-full mt-5" onSubmit={handleSubmit(onValid)}>
@@ -45,8 +53,11 @@ const Upload: NextPage = () => {
               className="w-full focus:outline-none text-top"
             />
           </div>
+          {errors.text && (
+            <p className="text-red-400 text-sm">{errors.text.message}</p>
+          )}
           <div className="h-1/4 flex justify-end items-center">
-            <label>
+            {/* <label>
               <svg
                 className="h-8 w-8"
                 stroke="currentColor"
@@ -57,7 +68,7 @@ const Upload: NextPage = () => {
                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
               </svg>
               <input className="hidden" type="file" />
-            </label>
+            </label> */}
             <button type="submit" className="bg-purple-300 px-4 rounded-3xl">
               Tweet
             </button>

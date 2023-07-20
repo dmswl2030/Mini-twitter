@@ -7,7 +7,7 @@ import Upload from "./upload";
 import { FaHome, FaSearch } from "react-icons/fa";
 interface TweetsResponse {
   ok: boolean;
-  tweet: Tweet[];
+  tweets: Tweet[];
 }
 
 const Home: NextPage = () => {
@@ -44,9 +44,9 @@ const Home: NextPage = () => {
         <Upload />
 
         <div className="border-t-2 border-purple-300 mt-10">
-          {data && data.tweet?.length > 0 ? (
+          {data && data.tweets?.length > 0 ? (
             <ul>
-              {data.tweet.map((tweet) => (
+              {data.tweets.map((tweet) => (
                 <li key={tweet.id}>{tweet.text}</li>
               ))}
             </ul>
