@@ -3,15 +3,19 @@ import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { useEffect } from "react";
 import { NextPage } from "next";
+import useUser from "../libs/client/useUser";
+import { User } from "@prisma/client";
 
 interface UploadForm {
   text: string;
 }
 interface UploadMutation {
   ok: boolean;
+  user: User;
 }
 
 const Upload: NextPage = () => {
+  const { user } = useUser();
   const { mutate } = useSWR<UploadMutation>("/api/tweets");
   const {
     register,
@@ -35,18 +39,21 @@ const Upload: NextPage = () => {
       mutate();
     }
   }, [data]);
+
   return (
     <div className="w-full">
       <form className="flex h-full mt-5" onSubmit={handleSubmit(onValid)}>
+        <div></div>
         <img
           src=""
           alt="userImg"
           className="w-20 h-20 rounded-full border border-purple-300 text mr-5"
         />
-        <div className="h-full w-3/4">
-          <div className="h-3/4 text-2xl w-full">
+        <div className="w-3/4">
+          <div>{user.name}</div>
+          <div className="h-20 text-2xl w-full">
             <input
-              {...register("text")}
+              {...register("text", { required: "This field is required" })}
               type="text"
               placeholder="What is happening?!"
               className="w-full focus:outline-none text-top"
@@ -55,7 +62,7 @@ const Upload: NextPage = () => {
           {errors.text && (
             <p className="text-red-400 text-sm">{errors.text.message}</p>
           )}
-          <div className="h-1/4 flex justify-end items-center">
+          <div className="flex justify-end items-center">
             {/* <label>
               <svg
                 className="h-8 w-8"

@@ -1,13 +1,18 @@
 import React from "react";
 import { NextPage } from "next";
 import useUser from "../libs/client/useUser";
-import { Tweet } from "@prisma/client";
+import { Tweet, User } from "@prisma/client";
 import useSWR from "swr";
 import Upload from "./upload";
 import { FaHome, FaSearch } from "react-icons/fa";
-interface TweetsResponse {
+import Link from "next/link";
+export interface TweetsResponse {
   ok: boolean;
-  tweets: Tweet[];
+  tweets: TweetUser[];
+}
+
+interface TweetUser extends Tweet {
+  user: User;
 }
 
 const Home: NextPage = () => {
@@ -43,13 +48,28 @@ const Home: NextPage = () => {
 
         <Upload />
 
-        <div className="border-t-2 border-purple-300 mt-10">
+        <div className="border-t-2 border-purple-300 mt-5">
           {data && data.tweets?.length > 0 ? (
-            <ul>
-              {data.tweets.map((tweet) => (
-                <li key={tweet.id}>{tweet.text}</li>
+            <>
+              {data.tweets.map((tweet, i) => (
+                <Link href={`/tweets/${tweet.id}`} key={i}>
+                  <div className="w-full border-b">
+                    <div className="flex">
+                      {/* <div>{tweet.user.name}</div> */}
+
+                      <div className="w-full">
+                        <div className="flex justify-between items-center">
+                          <p className="text-lg">{tweet.text}</p>
+                          <p className="text-sm text-black">
+                            {tweet.createdAt.toString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               ))}
-            </ul>
+            </>
           ) : (
             "No Tweets"
           )}
