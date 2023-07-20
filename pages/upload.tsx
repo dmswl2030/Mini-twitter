@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { useEffect } from "react";
 import { NextPage } from "next";
-// import { Tweet } from "@prisma/client";
 
 interface UploadForm {
   text: string;
@@ -13,7 +12,7 @@ interface UploadMutation {
 }
 
 const Upload: NextPage = () => {
-  const { mutate } = useSWR<UploadMutation>("/api/tweet");
+  const { mutate } = useSWR<UploadMutation>("/api/tweets");
   const {
     register,
     handleSubmit,
@@ -21,7 +20,7 @@ const Upload: NextPage = () => {
     setValue,
   } = useForm<UploadForm>();
 
-  const [tweet, { data, loading }] = useMutation<UploadMutation>("/api/tweet");
+  const [tweet, { data, loading }] = useMutation<UploadMutation>("/api/tweets");
 
   const onValid = async ({ text }: UploadForm) => {
     if (loading) return;

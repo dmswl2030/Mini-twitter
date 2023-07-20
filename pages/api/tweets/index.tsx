@@ -8,10 +8,10 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    const tweet = await client.tweet.findMany({});
+    const tweets = await client.tweet.findMany({});
     res.json({
       ok: true,
-      tweet,
+      tweets,
     });
   }
   if (req.method === "POST") {
@@ -19,7 +19,7 @@ async function handler(
       body: { text, createdAt },
       session: { user },
     } = req;
-    const tweet = await client.tweet.create({
+    const tweets = await client.tweet.create({
       data: {
         text,
         createdAt,
@@ -32,7 +32,7 @@ async function handler(
     });
     res.json({
       ok: true,
-      tweet,
+      tweets,
     });
   }
 }
