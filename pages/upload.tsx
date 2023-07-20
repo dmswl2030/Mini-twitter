@@ -50,7 +50,7 @@ const Upload: NextPage = () => {
           className="w-20 h-20 rounded-full border border-purple-300 text mr-5"
         />
         <div className="w-3/4">
-          <div>{user.name}</div>
+          <div>{user?.name}</div>
           <div className="h-20 text-2xl w-full">
             <input
               {...register("text", { required: "This field is required" })}

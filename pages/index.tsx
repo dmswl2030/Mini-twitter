@@ -55,7 +55,7 @@ const Home: NextPage = () => {
                 <Link href={`/tweets/${tweet.id}`} key={i}>
                   <div className="w-full border-b">
                     <div className="flex">
-                      {/* <div>{tweet.user.name}</div> */}
+                      <div>{tweet.user?.name}</div>
 
                       <div className="w-full">
                         <div className="flex justify-between items-center">

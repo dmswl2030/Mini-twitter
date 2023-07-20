@@ -8,7 +8,11 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    const tweets = await client.tweet.findMany({});
+    const tweets = await client.tweet.findMany({
+      include: {
+        user: true,
+      },
+    });
     res.json({
       ok: true,
       tweets,
