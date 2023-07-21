@@ -28,14 +28,15 @@ model Tweet {
   updatedAt DateTime? @updatedAt
   userId    Int
   user      User      @relation(fields: [userId], references: [id])
-  Like      Like[]
+  likes     Like[]
 }
 
 model Like {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  tweet     Tweet    @relation(fields: [tweetId], references: [id])
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  tweet     Tweet     @relation(fields: [tweetId], references: [id])
   tweetId   Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
   userId    Int
 }

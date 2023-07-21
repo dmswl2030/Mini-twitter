@@ -11,7 +11,6 @@ interface TweetWithUser extends Tweet {
 interface TweetDetailResponse {
   ok: boolean;
   tweet: TweetWithUser;
-  relatedProducts: Tweet[];
   isLiked: boolean;
 }
 
@@ -21,12 +20,13 @@ const ItemDetail: NextPage = () => {
     router.query.id ? `/api/tweets/${router.query.id}` : null
   );
 
-  const [toggleFav] = useMutation(`/api/tweets/${router.query.id}/fav`);
-  const onFavClick = () => {
-    toggleFav({});
+  const [toggleLike] = useMutation(`/api/tweets/${router.query.id}/likes`);
+
+  const onLikeClick = () => {
+    toggleLike({});
     if (!data) return;
     mutate({ ...data, isLiked: !data.isLiked }, false);
-    toggleFav({});
+    toggleLike({});
   };
   return (
     <div className="px-4  py-4">
@@ -52,7 +52,7 @@ const ItemDetail: NextPage = () => {
 
           <div className="flex items-center justify-between space-x-2">
             <button
-              onClick={onFavClick}
+              onClick={onLikeClick}
               className={cls(
                 "p-3 rounded-md flex items-center",
                 data?.isLiked
