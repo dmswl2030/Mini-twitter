@@ -17,6 +17,11 @@ async function handler(
     },
     include: {
       user: true,
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
     },
   });
 

@@ -43,12 +43,12 @@ const Upload: NextPage = () => {
   return (
     <div className="w-full">
       <form className="flex h-full mt-5" onSubmit={handleSubmit(onValid)}>
-        <div></div>
-        <img
-          src=""
-          alt="userImg"
-          className="w-20 h-20 rounded-full border border-purple-300 text mr-5"
-        />
+        <div
+          className="w-20 h-20 rounded-full border
+          border-purple-300 text-3xl font-semibold mr-5 flex justify-center items-center bg-purple-300 text-white"
+        >
+          {user?.name[0]}
+        </div>
         <div className="w-3/4">
           <div>{user?.name}</div>
           <div className="h-20 text-2xl w-full">

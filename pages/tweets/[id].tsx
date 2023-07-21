@@ -27,7 +27,6 @@ const ItemDetail: NextPage = () => {
   const [toggleLike] = useMutation(`/api/tweets/${router.query.id}/likes`);
 
   const onLikeClick = () => {
-    toggleLike({});
     if (!data) return;
     mutate({ ...data, isLiked: !data.isLiked }, false);
     toggleLike({});
