@@ -5,8 +5,12 @@ import Link from "next/link";
 import { Tweet, User } from "@prisma/client";
 import useMutation from "../../libs/client/useMutation";
 import { formatDateAndTime, cls } from "../../libs/client/utils/util";
+
 interface TweetWithUser extends Tweet {
   user: User;
+  _count: {
+    likes: number;
+  };
 }
 interface TweetDetailResponse {
   ok: boolean;
@@ -31,18 +35,14 @@ const ItemDetail: NextPage = () => {
   return (
     <div className="px-4  py-4">
       <div className="mb-8">
-        <div className="flex cursor-pointer py-3 border-t border-b items-center space-x-3">
-          <div className="w-12 h-12 rounded-full bg-slate-300" />
+        <Link href="/">
+          <p className="text-2xl">&larr;</p>
+        </Link>
+        <div className="flex cursor-pointer py-3 border-t items-center space-x-3">
           <div>
-            <p className="text-sm font-medium text-gray-700">
+            <p className="text-lg font-semibold text-purple-500">
               {data?.tweet?.user?.name}
             </p>
-            <Link
-              href={`/users/profiles/${data?.tweet?.user?.id}`}
-              className="text-xs font-medium text-gray-500"
-            >
-              View profile &rarr;
-            </Link>
           </div>
         </div>
         <div className="mt-5">
@@ -50,7 +50,7 @@ const ItemDetail: NextPage = () => {
             {data?.tweet?.text}
           </h1>
 
-          <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center justify-end space-x-2">
             <button
               onClick={onLikeClick}
               className={cls(
@@ -91,6 +91,7 @@ const ItemDetail: NextPage = () => {
                 </svg>
               )}
             </button>
+            <p>{data?.tweet._count?.likes}</p>
             <div>{formatDateAndTime(data?.tweet?.createdAt.toString())}</div>
           </div>
         </div>

@@ -7,13 +7,17 @@ import Upload from "./upload";
 import { FaHome, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { formatDateAndTime } from "../libs/client/utils/util";
+import { FiHeart } from "react-icons/fi";
 export interface TweetsResponse {
   ok: boolean;
-  tweets: TweetUser[];
+  tweets: TweetWithUser[];
 }
 
-interface TweetUser extends Tweet {
+interface TweetWithUser extends Tweet {
   user: User;
+  _count: {
+    likes: number;
+  };
 }
 
 const Home: NextPage = () => {
@@ -66,7 +70,12 @@ const Home: NextPage = () => {
                           </div>
 
                           <p className="text-sm text-black">
-                            {formatDateAndTime(tweet.createdAt.toString())}
+                            <div className="flex flex-row items-center">
+                              <FiHeart />
+                              <span className="pl-2">
+                                {tweet._count?.likes}
+                              </span>
+                            </div>
                           </p>
                         </div>
                       </div>
