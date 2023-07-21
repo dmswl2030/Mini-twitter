@@ -6,6 +6,7 @@ import useSWR from "swr";
 import Upload from "./upload";
 import { FaHome, FaSearch } from "react-icons/fa";
 import Link from "next/link";
+import { formatDateAndTime } from "../libs/client/utils/util";
 export interface TweetsResponse {
   ok: boolean;
   tweets: TweetUser[];
@@ -55,13 +56,17 @@ const Home: NextPage = () => {
                 <Link href={`/tweets/${tweet.id}`} key={i}>
                   <div className="w-full border-b">
                     <div className="flex">
-                      <div>{tweet.user?.name}</div>
-
                       <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <p className="text-lg">{tweet.text}</p>
+                        <div className="flex justify-between items-center cursor-pointer">
+                          <div className="my-5">
+                            <div className="text-md text-purple-300 font-extrabold">
+                              {tweet.user?.name}
+                            </div>
+                            <p className="text-lg">{tweet.text}</p>
+                          </div>
+
                           <p className="text-sm text-black">
-                            {tweet.createdAt.toString()}
+                            {formatDateAndTime(tweet.createdAt.toString())}
                           </p>
                         </div>
                       </div>
