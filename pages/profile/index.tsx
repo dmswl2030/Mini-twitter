@@ -2,11 +2,13 @@ import { NextPage } from "next";
 import useUser from "../../libs/client/useUser";
 import Link from "next/link";
 import { formatDateAndTime } from "../../libs/client/utils/util";
-
+import { useRouter } from "next/router";
 const Profile: NextPage = () => {
   const { user } = useUser();
-  const handleLogout = () => {
-    fetch("/api/logout").then(() => (window.location.href = "/"));
+  const router = useRouter();
+  const handleLogout = async () => {
+    await fetch("/api/users/logout");
+    router.reload();
   };
 
   return (

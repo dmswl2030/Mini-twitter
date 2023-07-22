@@ -30,7 +30,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (data && data.ok) {
-      router.push("/");
+      router.replace("/");
     }
   }, [data]);
 
@@ -87,6 +87,12 @@ const Login: NextPage = () => {
       </div>
     </main>
   );
+};
+
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  };
 };
 
 export default Login;

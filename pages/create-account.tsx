@@ -33,7 +33,7 @@ const CreateAccount: NextPage = () => {
 
   useEffect(() => {
     if (data?.ok) {
-      router.push("/login");
+      router.replace("/login");
     }
   }, [data]);
 
