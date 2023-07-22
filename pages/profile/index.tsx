@@ -5,6 +5,9 @@ import { formatDateAndTime } from "../../libs/client/utils/util";
 
 const Profile: NextPage = () => {
   const { user } = useUser();
+  const handleLogout = () => {
+    fetch("/api/logout").then(() => (window.location.href = "/"));
+  };
 
   return (
     <div className="p-4 w-full h-full">
@@ -30,9 +33,17 @@ const Profile: NextPage = () => {
       <div className="ml-3 -mt-16">
         <div className="flex justify-between items-center">
           <div className="font-extrabold text-2xl">{user?.name}</div>
-          <button className="font-extrabold border-2 rounded-3xl px-3 py-2">
-            Edit Profile
-          </button>
+          <div className="flex flex-col">
+            <button className="font-extrabold border-2 rounded-3xl px-3 py-2">
+              Edit Profile
+            </button>
+            <button
+              className="font-extrabold border-2 rounded-3xl px-3 py-2 mt-2 text-red-500"
+              onClick={handleLogout}
+            >
+              LogOut
+            </button>
+          </div>
         </div>
 
         <div className="text-gray-500 mb-4">{user?.email}</div>
