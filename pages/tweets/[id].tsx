@@ -51,8 +51,8 @@ const ItemDetail: NextPage = () => {
     toggleLike({});
   };
   return (
-    <div className="p-4 mb-8">
-      <div className="flex items-center">
+    <div className="p-4">
+      <div className="flex items-center pb-5">
         <div>
           <Link href="/">
             <p className="text-2xl cursor-pointer">&larr;</p>
@@ -63,8 +63,8 @@ const ItemDetail: NextPage = () => {
           <span className="text-2xl">Tweet</span>
         </div>
       </div>
-      <div className="flex mt-5 border-t border-b pb-10">
-        <div className="flex cursor-pointer py-3 items-center">
+      <div className="flex border-t border-b py-7">
+        <div className="flex">
           <div
             className="w-14 h-14 rounded-full border
           border-purple-300 text-2xl font-semibold mr-5 flex justify-center items-center bg-purple-300 text-white"
@@ -73,7 +73,7 @@ const ItemDetail: NextPage = () => {
           </div>
         </div>
         <div>
-          <p className="text-lg font-semibold text-purple-500 pt-7 my-5">
+          <p className="text-lg font-semibold text-purple-500 mb-4">
             {data?.tweet?.user?.name}
           </p>
           <h1 className="text-3xl font-bold text-gray-900">
