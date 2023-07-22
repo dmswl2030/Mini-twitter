@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Tweet, User } from "@prisma/client";
 import useMutation from "../../libs/client/useMutation";
 import { formatDateAndTime, cls } from "../../libs/client/utils/util";
-
+import { FiEye } from "react-icons/fi";
 interface TweetWithUser extends Tweet {
   user: User;
   _count: {
@@ -28,10 +28,8 @@ const ItemDetail: NextPage = () => {
 
   const onLikeClick = () => {
     if (!data) return;
-
     const updatedIsLiked = !data.isLiked;
     const updatedLikes = data.tweet._count.likes + (updatedIsLiked ? 1 : -1);
-
     mutate(
       {
         ...data,
@@ -46,8 +44,6 @@ const ItemDetail: NextPage = () => {
       },
       false
     );
-
-    // 좋아요 API 호출
     toggleLike({});
   };
   return (
@@ -125,7 +121,13 @@ const ItemDetail: NextPage = () => {
                 </svg>
               )}
             </button>
-            <p>{data?.tweet._count?.likes} likes</p>
+            <p className="mr-3">{data?.tweet._count?.likes} likes</p>
+            <p className="flex justify-center items-center">
+              <div className="mr-2">
+                <FiEye />
+              </div>
+              {data?.tweet.views} Views
+            </p>
           </div>
 
           <div>{formatDateAndTime(data?.tweet?.createdAt.toString())}</div>

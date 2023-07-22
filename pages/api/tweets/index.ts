@@ -23,6 +23,7 @@ async function handler(
       tweets,
     });
   }
+
   if (req.method === "POST") {
     const {
       body: { text, createdAt },

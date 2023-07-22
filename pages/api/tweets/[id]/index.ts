@@ -25,6 +25,11 @@ async function handler(
     },
   });
 
+  await client.tweet.update({
+    where: { id: Number(id) },
+    data: { views: (tweet?.views || 0) + 1 },
+  });
+
   const isLiked = Boolean(
     await client.like.findFirst({
       where: {

@@ -5,7 +5,7 @@ import { Tweet, User } from "@prisma/client";
 import useSWR from "swr";
 import Upload from "./upload";
 import Link from "next/link";
-import { FiHeart, FiUser } from "react-icons/fi";
+import { FiHeart, FiUser, FiEye } from "react-icons/fi";
 export interface TweetsResponse {
   ok: boolean;
   tweets: TweetWithUser[];
@@ -15,6 +15,7 @@ interface TweetWithUser extends Tweet {
   user: User;
   _count: {
     likes: number;
+    views: number;
   };
 }
 
@@ -72,6 +73,10 @@ const Home: NextPage = () => {
                       <div className="flex flex-row items-center">
                         <FiHeart />
                         <span className="pl-2">{tweet._count?.likes}</span>
+                      </div>
+                      <div className="flex flex-row items-center">
+                        <FiEye />
+                        <span className="pl-2">{tweet.views}</span>
                       </div>
                     </p>
                   </div>

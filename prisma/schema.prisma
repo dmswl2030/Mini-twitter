@@ -29,6 +29,7 @@ model Tweet {
   userId    Int
   user      User      @relation(fields: [userId], references: [id])
   likes     Like[]
+  views     Int       @default(0)
 }
 
 model Like {
