@@ -1,18 +1,20 @@
-export function formatDateAndTime(dateString: string | undefined): string {
-  if (!dateString) {
+export function formatDateAndTime(inputDate: string | undefined) {
+  if (!inputDate) {
     return "";
   }
+  const date = new Date(inputDate);
+  const year = date.getFullYear();
+  const month = date.toLocaleString("en-US", { month: "long" });
+  const day = date.getDate();
 
-  const dateObject = new Date(dateString);
+  let hours = date.getHours();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours %= 12;
+  hours = hours || 12;
 
-  const year = dateObject.getFullYear();
-  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
-  const date = String(dateObject.getDate()).padStart(2, "0");
-  const hours = String(dateObject.getHours()).padStart(2, "0");
-  const minutes = String(dateObject.getMinutes()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
 
-  const formattedDateTime = `${year}-${month}-${date} ${hours}:${minutes}`;
-  return formattedDateTime;
+  return `${hours}:${minutes} ${ampm} · ${month} ${day}, ${year}`;
 }
 
 export function cls(...classnames: string[]) {

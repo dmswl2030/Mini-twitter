@@ -11,14 +11,12 @@ async function handler(
     query: { id },
     session: { user },
   } = req;
-  console.log(id, "test");
   const alreadyExists = await client.like.findFirst({
     where: {
       tweetId: Number(id),
       userId: user?.id,
     },
   });
-  console.log(alreadyExists);
   if (alreadyExists) {
     await client.like.delete({
       where: {

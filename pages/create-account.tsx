@@ -28,7 +28,6 @@ const CreateAccount: NextPage = () => {
 
   const onValid = (validForm: IForm) => {
     if (loading) return;
-    console.log(data);
     res(validForm);
   };
 

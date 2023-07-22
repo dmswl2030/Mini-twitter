@@ -42,14 +42,20 @@ const Upload: NextPage = () => {
 
   return (
     <div className="w-full">
-      <form className="flex h-full mt-5" onSubmit={handleSubmit(onValid)}>
-        <div
-          className="w-20 h-20 rounded-full border
+      <form
+        className="flex w-full h-full mt-5 justify-between"
+        onSubmit={handleSubmit(onValid)}
+      >
+        <div className="w-1/5">
+          <div
+            className="w-20 h-20 rounded-full border
           border-purple-300 text-3xl font-semibold mr-5 flex justify-center items-center bg-purple-300 text-white"
-        >
-          {user?.name[0]}
+          >
+            {user?.name[0]}
+          </div>
         </div>
-        <div className="w-3/4">
+
+        <div className="w-4/5">
           <div>{user?.name}</div>
           <div className="h-20 text-2xl w-full">
             <input
@@ -75,7 +81,10 @@ const Upload: NextPage = () => {
               </svg>
               <input className="hidden" type="file" />
             </label> */}
-            <button type="submit" className="bg-purple-300 px-4 rounded-3xl">
+            <button
+              type="submit"
+              className="bg-purple-300 px-4 py-2 rounded-3xl text-white"
+            >
               Tweet
             </button>
           </div>

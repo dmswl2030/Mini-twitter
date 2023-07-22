@@ -28,28 +28,63 @@ const ItemDetail: NextPage = () => {
 
   const onLikeClick = () => {
     if (!data) return;
-    mutate({ ...data, isLiked: !data.isLiked }, false);
+
+    const updatedIsLiked = !data.isLiked;
+    const updatedLikes = data.tweet._count.likes + (updatedIsLiked ? 1 : -1);
+
+    mutate(
+      {
+        ...data,
+        isLiked: updatedIsLiked,
+        tweet: {
+          ...data.tweet,
+          _count: {
+            ...data.tweet._count,
+            likes: updatedLikes,
+          },
+        },
+      },
+      false
+    );
+
+    // 좋아요 API 호출
     toggleLike({});
   };
   return (
-    <div className="px-4  py-4">
-      <div className="mb-8">
-        <Link href="/">
-          <p className="text-2xl">&larr;</p>
-        </Link>
-        <div className="flex cursor-pointer py-3 border-t items-center space-x-3">
-          <div>
-            <p className="text-lg font-semibold text-purple-500">
-              {data?.tweet?.user?.name}
-            </p>
+    <div className="p-4 mb-8">
+      <div className="flex items-center">
+        <div>
+          <Link href="/">
+            <p className="text-2xl cursor-pointer">&larr;</p>
+          </Link>
+        </div>
+
+        <div className="mx-auto text-3xl font-bold">
+          <span className="text-2xl">Tweet</span>
+        </div>
+      </div>
+      <div className="flex mt-5 border-t border-b pb-10">
+        <div className="flex cursor-pointer py-3 items-center">
+          <div
+            className="w-14 h-14 rounded-full border
+          border-purple-300 text-2xl font-semibold mr-5 flex justify-center items-center bg-purple-300 text-white"
+          >
+            {data?.tweet?.user?.name[0]}
           </div>
         </div>
-        <div className="mt-5">
+        <div>
+          <p className="text-lg font-semibold text-purple-500 pt-7 my-5">
+            {data?.tweet?.user?.name}
+          </p>
           <h1 className="text-3xl font-bold text-gray-900">
             {data?.tweet?.text}
           </h1>
+        </div>
+      </div>
 
-          <div className="flex items-center justify-end space-x-2">
+      <div className="mt-2">
+        <div className="flex justify-between items-center border-b">
+          <div className="flex justify-center items-center">
             <button
               onClick={onLikeClick}
               className={cls(
@@ -90,9 +125,10 @@ const ItemDetail: NextPage = () => {
                 </svg>
               )}
             </button>
-            <p>{data?.tweet._count?.likes}</p>
-            <div>{formatDateAndTime(data?.tweet?.createdAt.toString())}</div>
+            <p>{data?.tweet._count?.likes} likes</p>
           </div>
+
+          <div>{formatDateAndTime(data?.tweet?.createdAt.toString())}</div>
         </div>
       </div>
     </div>
