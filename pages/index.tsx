@@ -3,11 +3,12 @@ import { NextPage } from "next";
 import useUser from "../libs/client/useUser";
 import { Tweet, User } from "@prisma/client";
 import useSWR from "swr";
-import Upload from "./upload";
+import Upload from "../components/upload";
 import Link from "next/link";
-import { FiHeart, FiUser, FiEye } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
+import Tweets from "../components/tweets";
 export interface TweetsResponse {
-  ok: boolean;
+  ok?: boolean;
   tweets: TweetWithUser[];
 }
 
@@ -15,7 +16,6 @@ interface TweetWithUser extends Tweet {
   user: User;
   _count: {
     likes: number;
-    views: number;
   };
 }
 
@@ -50,39 +50,11 @@ const Home: NextPage = () => {
         <Upload />
 
         <div className="border-t border-purple-300 mt-5">
-          {data && data.tweets?.length > 0
-            ? data.tweets.map((tweet, i) => (
-                <Link href={`/tweets/${tweet.id}`} key={i}>
-                  <div className="w-full border-b flex justify-between items-center cursor-pointer">
-                    <div className="my-4 flex">
-                      <div
-                        className="w-12 h-12 rounded-full border
-          border-purple-300 text-2xl font-semibold mr-5 flex justify-center items-center bg-purple-300 text-white"
-                      >
-                        {tweet.user?.name[0]}
-                      </div>
-                      <div className="">
-                        <div className="text-md text-purple-300 font-extrabold">
-                          {tweet.user?.name}
-                        </div>
-                        <p className="text-lg">{tweet.text}</p>
-                      </div>
-                    </div>
-
-                    <div className="text-sm text-black w-10">
-                      <div className="flex flex-row items-center">
-                        <FiHeart />
-                        <span className="pl-2">{tweet._count?.likes}</span>
-                      </div>
-                      <div className="flex flex-row items-center">
-                        <FiEye />
-                        <span className="pl-2">{tweet.views}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            : "No Tweets"}
+          {data && data.tweets?.length > 0 ? (
+            <Tweets tweets={data.tweets.slice().reverse()} />
+          ) : (
+            <h3>"No Tweets"</h3>
+          )}
         </div>
       </div>
     </div>

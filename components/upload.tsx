@@ -2,7 +2,6 @@ import useMutation from "../libs/client/useMutation";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { useEffect } from "react";
-import { NextPage } from "next";
 import useUser from "../libs/client/useUser";
 import { User } from "@prisma/client";
 
@@ -14,7 +13,7 @@ interface UploadMutation {
   user: User;
 }
 
-const Upload: NextPage = () => {
+export default function Upload() {
   const { user } = useUser();
   const { mutate } = useSWR<UploadMutation>("/api/tweets");
   const {
@@ -92,6 +91,4 @@ const Upload: NextPage = () => {
       </form>
     </div>
   );
-};
-
-export default Upload;
+}
