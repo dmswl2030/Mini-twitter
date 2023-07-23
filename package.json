@@ -1,9 +1,9 @@
 {
-  "name": "nextjs-prisma-typescript-tailwind-blueprint",
+  "name": "mini-twitter",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "db-sync": "npx prisma migrate dev",
     "type-check": "tsc"
