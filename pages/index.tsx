@@ -69,7 +69,7 @@ const Home: NextPage = () => {
                       </div>
                     </div>
 
-                    <p className="text-sm text-black">
+                    <div className="text-sm text-black w-10">
                       <div className="flex flex-row items-center">
                         <FiHeart />
                         <span className="pl-2">{tweet._count?.likes}</span>
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
                         <FiEye />
                         <span className="pl-2">{tweet.views}</span>
                       </div>
-                    </p>
+                    </div>
                   </div>
                 </Link>
               ))
